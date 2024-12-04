@@ -42,7 +42,7 @@ public:
                 continue;// Do not re-visit vertices
 
             if (curr == to)
-                return level;// If objective found then exit with true
+                return level;// If objective found then exit with level
             
             // Mark current vertex as visited
             visited.insert(curr);
@@ -54,6 +54,20 @@ public:
             }
         }
         return -1;// If reached here, then there is no path
+    }
+
+    /// <summary>
+    /// Walk the graph from 'from' vertex and print the values using Depth First Search (DFS).
+    /// Assumes it is a tree (no cycles).
+    /// </summary>
+    /// <param name="from"></param>
+    /// <returns></returns>
+    void walk(const T& from)
+    {
+        std::cout << from << "\n";
+        if (m_adj.find(from) == m_adj.end()) return;
+        for (const auto& node : m_adj[from])
+            walk(node);
     }
 
     friend std::ostream& operator<<(std::ostream& os, const Graph& graph)
@@ -88,14 +102,18 @@ int main()
     Graph graph_bands = Graph<std::string>();
 
     // Adding edges to the graph
-    graph_bands += std::make_pair<std::string, std::vector<std::string>>("Radiohead", { "Muse", "Kashmir", "Queens of the Stone Age" });
-    graph_bands += std::make_pair<std::string, std::vector<std::string>>("The Strokes", { "Julian Casablancas", "Arctic Monkeys" });
+    graph_bands += std::make_pair<std::string, std::vector<std::string>>("Radiohead", { "Muse", "Kashmir", "Queens Of The Stone Age" });
     graph_bands += std::make_pair<std::string, std::vector<std::string>>("Kashmir", { "Nirvana", "David Bowie" });
     graph_bands += std::make_pair<std::string, std::vector<std::string>>("David Bowie", { "Johnny Cash", "The Killers" });
     graph_bands += std::make_pair<std::string, std::vector<std::string>>("The Killers", { "Jim Croche" });
 
     // Print the graph
-    std::cout << graph_bands;
+    //std::cout << graph_bands;
+
+    // Walk the graph
+    std::cout << "---------------------" << std::endl;
+    graph_bands.walk("Radiohead");
+    std::cout << "---------------------" << std::endl;
 
     // Traverse
     int dist_bands = graph_bands.traverse("Radiohead", "Jim Croche");
@@ -118,7 +136,7 @@ int main()
     graph += std::make_pair<int, std::vector<int>>(6, { 10 });
 
     // Print the graph
-    std::cout << graph;
+    //std::cout << graph;
 
     // Traverse
     int dist_ints = graph.traverse(1, 10);
