@@ -7,7 +7,7 @@ void moveZeroes(std::vector<int>& arr)
     int r{ static_cast<int>(arr.size()) };
     for (int i = 0; i < arr.size(); i++)
     {
-        if (arr[i] > 0) arr[l++] = arr[i];
+        if (arr[i]) arr[l++] = arr[i];
         else r--;
     }
     for (int j = r; j < arr.size(); j++)
