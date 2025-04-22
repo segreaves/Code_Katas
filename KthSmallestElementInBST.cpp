@@ -13,8 +13,7 @@ void solution(TreeNode* node, int& k, int& ans)
 {
     if (node == nullptr) return;
     solution(node->left, k, ans);
-    k--;
-    if (k == 0)
+    if (--k == 0)
     {
         ans = node->val;
         return;
