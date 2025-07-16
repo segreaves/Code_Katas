@@ -1,15 +1,16 @@
 #include <iostream>
 #include <vector>
-#include <limits>
 
 int maxProfit(std::vector<int>& prices)
 {
-    int buyPrice{ std::numeric_limits<int>::max() };
-    int profit{ 0 };
-    for (const auto& price : prices)
+    auto n{ prices.size() };
+    if (n == 0) return 0;
+    auto buy_price{ prices[0] };
+    auto profit{ 0 };
+    for (size_t i = 1; i < n; ++i)
     {
-        if (price < buyPrice) buyPrice = price;
-        else profit = std::max(profit, price - buyPrice);
+        if (prices[i] < buy_price) buy_price = prices[i];
+        else profit = std::max(profit, prices[i] - buy_price);
     }
     return profit;
 }
