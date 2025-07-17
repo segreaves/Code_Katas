@@ -1,17 +1,20 @@
 #include <iostream>
 #include <vector>
 
-std::vector<int> twoSum(std::vector<int>& numbers, int target)
+std::vector<int> twoSum(const std::vector<int>& numbers, const int& target)
 {
-    int l{ 0 };
-    int r{ static_cast<int>(numbers.size()) - 1 };
+    if (numbers.size() < 2) return { -1, -1 };
+    size_t l{ 0 };
+    size_t r{ numbers.size() - 1 };
     while (l < r)
     {
-        if (numbers[l] + numbers[r] == target) return {++l, ++r};
-        if (numbers[l] + numbers[r] < target) l++;
-        else r--;
+        auto sum{ numbers[l] + numbers[r] };
+        if (sum == target)
+            return { static_cast<int>(l + 1), static_cast<int>(r + 1) };
+        else if (sum < target) ++l;
+        else --r;
     }
-    return {-1, -1};
+    return { -1, -1 };
 }
 
 int main()
