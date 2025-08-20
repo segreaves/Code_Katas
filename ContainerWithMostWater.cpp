@@ -1,34 +1,35 @@
 #include <vector>
 #include <iostream>
 
-/*
-The amount of water a container can store is the area
-of the square formed by the distance between the to indexes and the height
-of the lower of the two.
-*/
-template<typename T>
-T maxWater(std::vector<T> heights)
+int maxWater(std::vector<int>& height)
+{
+    // Initialize two pointers
+    int l{ 0 };
+    int r{ static_cast<int>(height.size()) - 1 };
+    // Initialize result
+    int max_water{ 0 };
+    while (l < r)
     {
-        // If empty vector then return 0
-        if (heights.size() == 0) { return static_cast<T>(0); }
-        T max_water{ 0 };
-        // Rolling window
-        int l{ 0 }, last_l = l;
-        int r{ static_cast<int>(heights.size() - 1) }, last_r = r;
-        while (l < r)
-        {
-            // Calculate the water amount
-            T water{ (r - l) * std::min(heights[l], heights[r]) };
-            // Update max_water if needed
-            if (max_water < water) max_water = water;
-
-            if (heights[l] < heights[r]) ++l;
-            else --r;
-        }
-        return max_water;
+        // Calculate the height that can hold water
+        int l_height{ height[l] };
+        int r_height{ height[r] };
+        int min_height{ std::min(l_height, r_height) };
+        // Calculate current water amount
+        int water{ (r - l) * min_height };
+        // Update the max
+        max_water = std::max(max_water, water);
+        // Iterate pointer
+        if (l_height < r_height) ++l;
+        else --r;
     }
+    return max_water;
+}
 
 int main()
 {
-    std::cout << maxWater<int>({ 5, 9, 2, 1, 4 }) << std::endl;
+    std::vector<int> ex1{ { 1, 8, 6, 2, 5, 4, 8, 3, 7 } };
+    std::cout << "Should be 49: " << maxWater(ex1) << "\n";
+
+    std::vector<int> ex2{ {1, 1} };
+    std::cout << "Should be 1: " << maxWater(ex2) << "\n";
 }
