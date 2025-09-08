@@ -3,15 +3,11 @@
 
 void moveZeroes(std::vector<int>& arr)
 {
-    int l{ 0 };
-    int r{ static_cast<int>(arr.size()) };
-    for (int i = 0; i < arr.size(); i++)
-    {
-        if (arr[i]) arr[l++] = arr[i];
-        else r--;
-    }
-    for (int j = r; j < arr.size(); j++)
-        arr[j] = 0;
+    size_t l{ 0 };
+    for (const auto& num : arr)
+        if (num != 0) arr[l++] = num;
+    for (size_t i = l; i < arr.size(); ++i)
+        arr[i] = 0;
 }
 
 void print(std::vector<int>& arr)
@@ -32,3 +28,4 @@ int main()
     moveZeroes(ex2);
     print(ex2);
 }
+
