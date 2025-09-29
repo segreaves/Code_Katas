@@ -11,7 +11,7 @@ struct ListNode {
 
 ListNode* reverseList(ListNode* head)
 {
-    ListNode* prev = nullptr;
+    ListNode* prev{ nullptr };
     while (head)
     {
         ListNode* next{ head->next };
