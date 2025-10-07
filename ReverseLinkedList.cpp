@@ -54,7 +54,7 @@ int main()
     std::cout << "Reversed l2: ";
     printList(l2_rev);
 
-    ListNode* l3;
+    ListNode* l3{ new ListNode(2) };
     std::cout << "l3: ";
     printList(l3);
     ListNode* l3_rev{ reverseList(l3) };
