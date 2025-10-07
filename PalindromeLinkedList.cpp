@@ -43,7 +43,7 @@ bool isPalindrome(ListNode* head)
         ++list_size;
         curr = curr->next;
     }
-    if (list_size < 1) return true;
+    if (list_size == 1) return true;
     // Save the middle of the list
     unsigned int middle{ list_size % 2 == 0 ? list_size / 2 : (list_size / 2) + 1 };
     // Set pointer to start of list
