@@ -8,13 +8,13 @@ struct ListNode {
 
 bool hasCycle(ListNode *head)
 {
-    ListNode* tortoise = head;
-    ListNode* hare = head;
-    while (hare && hare->next)
+    ListNode* slow{ head };
+    ListNode* fast{ head };
+    while (fast && fast->next)
     {
-        hare = hare->next->next;
-        tortoise = tortoise->next;
-        if (hare == tortoise) return true;
+        fast = fast->next->next;
+        slow = slow->next;
+        if (fast == slow) return true;
     }
     return false;
 }
