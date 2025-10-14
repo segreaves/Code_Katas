@@ -19,8 +19,3 @@ ListNode* middleNode(ListNode* head)
     }
     return slow;
 }
-
-int main()
-{
-    //
-}
