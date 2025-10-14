@@ -29,8 +29,3 @@ ListNode* detectCycle(ListNode *head)
     }
     return nullptr;
 }
-
-int main()
-{
-    //
-}
