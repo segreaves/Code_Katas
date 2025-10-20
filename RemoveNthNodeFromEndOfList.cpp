@@ -11,26 +11,36 @@ struct ListNode
 
 ListNode* removeNthFromEnd(ListNode* head, int n)
 {
+    // Node: n guaranteed to be <= length of the list &
+    // n >= 1 &
+    // head is not null
     ListNode* curr{ new ListNode() };
     curr->next = head;
-    ListNode* tortoise{ curr };
-    ListNode* hare{ curr->next };
+    ListNode* slow{ curr };
+    ListNode* fast{ curr };
 
-    for (int i = 0; i < n; i++) hare = hare->next;
-
-    while (hare)
+    // Separate the two pointers by n
+    for (int i = 0; i < n; ++i)
+        fast = fast->next;
+    // Increment pointers until fast is null
+    while (fast && fast->next)
     {
-        tortoise = tortoise->next;
-        hare = hare->next;
+        slow = slow->next;
+        fast = fast->next;
     }
-
-    tortoise->next = tortoise->next->next;
+    // Remove Nth node (slow)
+    slow->next = slow->next->next;
     return curr->next;
 }
 
 void printList(ListNode* head)
 {
-    ListNode* curr = head;
+    if (!head)
+    {
+        std::cout << "{}";
+        return;
+    }
+    ListNode* curr{ head };
     while (curr != nullptr)
     {
         std::cout << curr->val << " ";
@@ -57,4 +67,10 @@ int main()
     printList(list2_1);
     std::cout << "Removed n = 2: ";
     printList(removeNthFromEnd(list2_1, 2));
+
+    ListNode* list3{ new ListNode(1) };
+    std::cout << "List 2: ";
+    printList(list3);
+    std::cout << "Removed n = 1: ";
+    printList(removeNthFromEnd(list3, 1));
 }
