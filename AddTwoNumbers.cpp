@@ -10,27 +10,26 @@ struct ListNode {
 
 ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
 {
-    ListNode* ans{ new ListNode() };
-    ListNode* curr{ ans };
-    int carry{ 0 };
+    ListNode* head{ new ListNode() };
+    ListNode* curr{ head };
+    unsigned int carry{ 0 };
+
+    // Add the value of the digits
     while (l1 || l2)
     {
-        int val{ (l1 ? l1->val : 0) + (l2 ? l2->val : 0) + carry };
+        // Calculate value of current digit
+        unsigned int val{ (l1 ? l1->val : 0) + (l2 ? l2->val : 0) + carry };
         carry = (int)(val / 10);
-        int digit{ val % 10 };
-        ListNode* next{ new ListNode(digit) };
-        curr->next = next;
-        curr = next;
+        // Add current digit
+        ListNode* digit{ new ListNode(val % 10) };
+        curr->next = digit;
+        curr = curr->next;
+        // Iterate lists
         if (l1) l1 = l1->next;
         if (l2) l2 = l2->next;
     }
-    if (carry)
-    {
-        ListNode* next{ new ListNode(carry) };
-        curr->next = next;
-        curr = next;
-    }
-    return ans->next;
+    if (carry) curr->next = new ListNode(1);
+    return head->next;
 }
 
 void printList(ListNode* head)
