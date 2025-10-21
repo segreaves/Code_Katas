@@ -11,26 +11,24 @@ struct ListNode
 
 ListNode* removeNthFromEnd(ListNode* head, int n)
 {
-    // Node: n guaranteed to be <= length of the list &
-    // n >= 1 &
-    // head is not null
-    ListNode* curr{ new ListNode() };
-    curr->next = head;
-    ListNode* slow{ curr };
-    ListNode* fast{ curr };
+    // Node: 1 <= n <= length of the list &
+    // head != null
+    ListNode* slow{ head };
+    ListNode* fast{ head };
 
     // Separate the two pointers by n
     for (int i = 0; i < n; ++i)
         fast = fast->next;
+    if (!fast) return head->next;
     // Increment pointers until fast is null
-    while (fast && fast->next)
+    while (fast->next)
     {
         slow = slow->next;
         fast = fast->next;
     }
     // Remove Nth node (slow)
     slow->next = slow->next->next;
-    return curr->next;
+    return head;
 }
 
 void printList(ListNode* head)
