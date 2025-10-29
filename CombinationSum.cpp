@@ -1,15 +1,16 @@
 #include <iostream>
 #include <vector>
 
-void explore(const std::vector<int>& candidates, std::vector<std::vector<int>>& ans, std::vector<int> curr, const int target, int index, int sum)
+void backtrack(const std::vector<int>& candidates, const int target, std::vector<int> curr, const int index, int sum, std::vector<std::vector<int>>& ans)
 {
-    if (sum == target) ans.push_back(curr);
+    if (sum == target) ans.emplace_back(curr);
     else if (sum < target)
     {
-        for (int i = index; i < candidates.size(); i++)
+        for (int i = index; i < candidates.size(); ++i)
         {
-            curr.push_back(candidates[i]);
-            explore(candidates, ans, curr, target, i, sum + candidates[i]);
+            int val{ candidates[i] };
+            curr.emplace_back(val);
+            backtrack(candidates, target, curr, i, val + sum, ans);
             curr.pop_back();
         }
     }
@@ -19,8 +20,10 @@ void explore(const std::vector<int>& candidates, std::vector<std::vector<int>>& 
 std::vector<std::vector<int>> combinationSum(std::vector<int>& candidates, int target)
 {
     std::vector<std::vector<int>> ans;
+    ans.reserve(150);
     std::vector<int> curr;
-    explore(candidates, ans, curr, target, 0, 0);
+    curr.reserve(candidates.size());
+    backtrack(candidates, target, curr, 0, 0, ans);
     return ans;
 }
 
