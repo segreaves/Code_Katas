@@ -4,7 +4,7 @@
 int searchInsert(std::vector<int>& nums, int target)
 {
     int ans = nums.size();
-    int start{ 0 };
+    int start = 0;
     int end = ans - 1;
     int m = 0;
     while (start <= end)
