@@ -9,21 +9,21 @@ struct TreeNode {
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
-void solution(TreeNode* node, int& k, int& ans)
+void findKthSmallestElem(TreeNode* node, int& k, int& ans)
 {
-    if (node == nullptr) return;
-    solution(node->left, k, ans);
+    if (!node) return;
+    findKthSmallestElem(node->left, k, ans);
     if (--k == 0)
     {
         ans = node->val;
         return;
     }
-    solution(node->right, k, ans);
+    findKthSmallestElem(node->right, k, ans);
 }
 
 int kthSmallest(TreeNode* root, int k)
 {
     int ans;
-    solution(root, k, ans);
+    findKthSmallestElem(root, k, ans);
     return ans;
 }
