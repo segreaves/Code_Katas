@@ -19,9 +19,31 @@ void inorder(TreeNode* node, std::vector<int>& ans)
     if (node->right) inorder(node->right, ans);
 }
 
+void inorder_iterative(TreeNode* root, std::vector<int>& ans)
+{
+    std::stack<TreeNode*> stack;
+    TreeNode* node{ root };
+    while (true)
+    {
+        if (node != nullptr)
+        {
+            stack.emplace(node);
+            node = node->left;
+        }
+        else
+        {
+            if (stack.empty()) return;
+            node = stack.top();
+            stack.pop();
+            ans.emplace_back(node->val);
+            node = node->right;
+        }
+    }
+}
+
 std::vector<int> inorderTraversal(TreeNode* root)
 {
-    std::vector<int> ans;
-    inorder(root, ans);
+    std::vector<int> ans{ std:: vector<int>() };
+    inorder_iterative(root, ans);
     return ans;
 }
