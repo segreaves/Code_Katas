@@ -21,7 +21,7 @@ void inorder(TreeNode* node, std::vector<int>& ans)
 
 void inorder_iterative(TreeNode* root, std::vector<int>& ans)
 {
-    std::stack<TreeNode*> stack;
+    std::stack<TreeNode*> stack{ std::stack<TreeNode*>() };
     TreeNode* node{ root };
     while (true)
     {
