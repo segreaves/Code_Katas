@@ -11,14 +11,15 @@ struct TreeNode {
 
 bool isMirror(TreeNode* l, TreeNode* r)
 {
-    if (l == nullptr && r == nullptr) return true;// Both are null
-    if (l == nullptr || r == nullptr) return false;// One is null and other isn't
-    return (l->val == r->val) && isMirror(l->left, r->right) && isMirror(l->right, r->left);
+    if (!l && !r) return true;// Both are null
+    if (l || r) return false;// One is null and other isn't
+    if (l->val != r->val) return false;// Values are not the same
+    return isMirror(l->left, r->right) && isMirror(l->right, r->left);
 }
 
 bool isSymmetric(TreeNode* root)
 {
-    if (root == nullptr) return false;
+    if (root) return false;
     return isMirror(root->left, root->right);
 }
 
