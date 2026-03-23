@@ -10,20 +10,17 @@ struct TreeNode {
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
-int diameterOfBinaryTree(TreeNode* root)
+bool isBalanced(TreeNode* root)
 {
-    int diameter{ 0 };
-
-    std::function<int(TreeNode*)> dfs = [&](TreeNode* node) -> int {
+    std::function<int(TreeNode*)> height = [&](TreeNode* node) {
         if (!node) return 0;
-        int left = dfs(node->left);
-        int right = dfs(node->right);
-        diameter = std::max(diameter, left + right);
-        return 1 + std::max(left, right);
+        int left{ height(node->left) };
+        int right{ height(node->right) };
+        if (left == -1 || right == -1 || std::abs(left - right) > 1) return -1;
+        return std::max(left, right) + 1;
     };
 
-    dfs(root);
-    return diameter;
+    return height(root) != -1;
 }
 
 int main()
