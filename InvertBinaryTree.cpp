@@ -1,5 +1,6 @@
 #include <iostream>
 #include <functional>
+#include <stack>
 
 struct TreeNode {
     int val;
@@ -21,6 +22,25 @@ TreeNode* invertTree(TreeNode* root)
     };
 
     return invert(root);
+}
+
+TreeNode* invertTree_Iterative(TreeNode* root)
+{
+    if (!root) return nullptr;
+
+    std::stack<TreeNode*> nodes;
+    nodes.push(root);
+
+    while(!nodes.empty())
+    {
+        TreeNode* curr{ nodes.top() };
+        nodes.pop();
+        std::swap(curr->left, curr->right);
+        if (curr->left) nodes.push(curr->left);
+        if (curr->right) nodes.push(curr->right);
+    }
+
+    return root;
 }
 
 int main()
