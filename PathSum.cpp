@@ -1,4 +1,5 @@
 #include <iostream>
+#include <functional>
 
 struct TreeNode {
     int val;
@@ -9,16 +10,14 @@ struct TreeNode {
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
-bool hasPath(TreeNode* node, int curr)
-{
-    if (node->left && node->right) return hasPath(node->left, curr - node->val) || hasPath(node->right, curr - node->val);
-    else if (node->left && !node->right) return hasPath(node->left, curr - node->val);
-    else if (!node->left && node->right) return hasPath(node->right, curr - node->val);
-    return node->val == curr;
-}
-
 bool hasPathSum(TreeNode* root, int targetSum)
 {
-    if (!root) return false;
-    return hasPath(root, targetSum);
+    std::function<bool(TreeNode*, const int, const int)> dfs = [&](TreeNode* node, const int& target, const int sum) {
+        if (!node) return false;
+        int curr{ sum + node->val };
+        if (!node->left && !node->right) return curr == target;
+        return dfs(node->left, target, curr) || dfs(node->right, target, curr);
+    };
+
+    return dfs(root, targetSum, 0);
 }
