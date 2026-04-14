@@ -1,4 +1,5 @@
 #include <limits>
+#include <vector>
 
 struct TreeNode
 {
@@ -10,25 +11,47 @@ struct TreeNode
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
-void dfs(TreeNode* node, int curr_max, int& res)
+int dfs(TreeNode* node, int curr_max)
 {
-    if (!node) return;
+    if (!node) return 0;
+
+    int is_good{ 0 };
 
     if (node->val >= curr_max)
     {
-        ++res;
+        is_good = 1;
         curr_max = node->val;
     }
-    dfs(node->left, curr_max, res);
-    dfs(node->right, curr_max, res);
-    return;
+    return is_good + dfs(node->left, curr_max) + dfs(node->right, curr_max);
 }
 
 int goodNodes(TreeNode* root)
 {
-    int res{ 0 };
-    dfs(root, std::numeric_limits<int>::min(), res);
-    return res;
+    return dfs(root, std::numeric_limits<int>::min());
+}
+
+int goodNodesIterative(TreeNode* root)
+{
+    if (!root) return 0;
+
+    std::vector<std::pair<TreeNode*, int>> stack;
+    stack.emplace_back(std::pair<TreeNode*, int>{ root, std::numeric_limits<int>::min() });
+    int good_nodes{ 0 };
+
+    while (!stack.empty())
+    {
+        auto [node, max]{ stack.back() };
+        stack.pop_back();
+
+        if (node->val >= max)
+        {
+            max = node->val;
+            ++good_nodes;
+        }
+        if (node->left) stack.emplace_back(std::pair<TreeNode*, int>{ node->left, max });
+        if (node->right) stack.emplace_back(std::pair<TreeNode*, int>{ node->right, max });
+    }
+    return good_nodes;
 }
 
 int main()
