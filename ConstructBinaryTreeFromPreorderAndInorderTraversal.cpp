@@ -12,7 +12,6 @@ struct TreeNode
 };
 
 
-
 TreeNode* buildTree(std::vector<int>& preorder, int& pre_start,
                     std::vector<int>& inorder, int in_start, int in_end)
 {
