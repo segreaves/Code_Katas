@@ -3,20 +3,24 @@
 
 int rob(std::vector<int>& nums)
 {
-    int n{ static_cast<int>(nums.size()) };
-    if (n == 0) return 0;
-    if (n == 1) return nums[0];
+    const int n = static_cast<int>(nums.size());
 
-    int il{ nums[0] };
-    int ir{ std::max(nums[0], nums[1]) };
-    int ans{ ir };
-    for (int i = 2; i < n; i++)
+    if (n == 0) return 0;
+
+    int two_back{ 0 };
+    int one_back{ 0 };
+
+    for (int money : nums)
     {
-        ans = std::max(ir, nums[i] + il);
-        il = ir;
-        ir = ans;
+        int curr = std::max(
+            two_back + money,// rob
+            one_back// skip
+        );
+        two_back = one_back;
+        one_back = curr;
     }
-    return ans;
+
+    return one_back;
 }
 
 int main()
